@@ -73,7 +73,7 @@ var listCoupon = new Vue({
 function getCouponsData(targetPage) {
 	return $.ajax({
 		type: 'GET',
-		url: '/api/coupons?page=' + targetPage + '&size=2',
+		url: '/api/coupons?page=' + targetPage + '&size=10',
 		contentType: 'application/json',
 		async: false,
 		success: function (data) {
