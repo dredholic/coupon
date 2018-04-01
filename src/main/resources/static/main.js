@@ -5,7 +5,6 @@ var issueCoupon = new Vue({
 	},
 	methods: {
 		issueCoupon: function () {
-			console.log("email: " + this.email);
 			$.ajax({
 				type: 'POST',
 				url: '/api/coupons',
@@ -38,14 +37,13 @@ Vue.component('coupon-grid', {
 		toTargetPage: function (event) {
 			// 메소드 안에서 사용하는 `this` 는 Vue 인스턴스를 가리킵니다
 			var message = event.target.innerText;
-			console.log(message);
 			if (message === 'Previous') {
-				var priviousPageNumber = pagenumber - 1;
+				var priviousPageNumber = this.pagenumber - 1;
 				if (priviousPageNumber > -1) {
 					updateCoupons(priviousPageNumber);
 				}
 			} else if (message === 'Next') {
-				var nextPageNumber = pagenumber + 1;
+				var nextPageNumber = this.pagenumber + 1;
 				if (nextPageNumber < this.totalpages)
 				updateCoupons(nextPageNumber);
 			} else {
@@ -75,19 +73,12 @@ function getCouponsData(targetPage) {
 		type: 'GET',
 		url: '/api/coupons?page=' + targetPage + '&size=10',
 		contentType: 'application/json',
-		async: false,
-		success: function (data) {
-			console.log(data.content);
-		},
-		fail: function (data) {
-			console.log(data);
-		}
+		async: false
 	}).responseJSON;
 }
 
 var updateCoupons = function (targetPage) {
 	var response = getCouponsData(targetPage);
-	console.log("updateCoupons: " + response);
 	listCoupon.content = response.content;
 	listCoupon.first = response.first;
 	listCoupon.last = response.last;
